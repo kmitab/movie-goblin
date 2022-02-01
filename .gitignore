@@ -44,3 +44,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+/*.txt
+api.ts
+__pycache__
+venv
+/_backend/config.json
