@@ -1,3 +1,5 @@
+**Work In Progress**
+
 ## omdb-g
 I made this project to help me learn Angular. It is based on the excellent [omdb api](https://www.omdbapi.com/).
 
