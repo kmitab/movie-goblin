@@ -56,21 +56,24 @@ app.add_middleware(
 
 
 @app.get("/t/{t}")
-def read_item(t: str, plot: Optional[str] = "short"):
-    r = httpx.get(f"{base_url}&t={t}&plot={plot}")
-    print(r.url)
-    return r.json()
+async def read_item(t: str, plot: Optional[str] = "short"):
+    async with httpx.AsyncClient() as client:
+        r = await client.get(f"{base_url}&t={t}&plot={plot}")
+        print(r.url)
+        return r.json()
 
 
 @app.get("/i/{i}")
-def read_item(i: str, plot: Optional[str] = "short"):
-    r = httpx.get(f"{base_url}&i={i}&plot={plot}")
-    print(r.url)
-    return r.json()
+async def read_item(i: str, plot: Optional[str] = "short"):
+    async with httpx.AsyncClient() as client:
+        r = await client.get(f"{base_url}&i={i}&plot={plot}")
+        print(r.url)
+        return r.json()
 
 
 @app.get("/s/{s}")
-def read_item(s: str):
-    r = httpx.get(f"{base_url}&s={s}")
-    print(r.url)
-    return r.json()
+async def read_item(s: str):
+    async with httpx.AsyncClient() as client:
+        r = await client.get(f"{base_url}&s={s}")
+        print(r.url)
+        return r.json()
