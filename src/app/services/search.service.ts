@@ -51,6 +51,11 @@ export class SearchService {
     this.currentResultPage = page;
   }
 
+  combinedSearch(term: string) {
+    this.searchSingular.next(term);
+    this.searchPlural.next(term);
+  }
+
   nextResultPage() {
     if (this.currentResultPage) {
       this.currentResultPage++;
