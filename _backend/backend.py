@@ -72,8 +72,8 @@ async def read_item(i: str, plot: Optional[str] = "short"):
 
 
 @app.get("/s/{s}")
-async def read_item(s: str):
+async def read_item(s: str, page: Optional[int] = 1):
     async with httpx.AsyncClient() as client:
-        r = await client.get(f"{base_url}&s={s}")
+        r = await client.get(f"{base_url}&s={s}&page={page}")
         print(r.url)
         return r.json()
