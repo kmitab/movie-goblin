@@ -19,6 +19,10 @@ export class FilmService {
   constructor(private http: HttpClient) { }
 
   getFilmById(imdbID: string): Observable<SingularResult> {
+    if (imdbID.trim().length == 0) {
+      return of(new SingularResult());
+    }
+
     const options = Object.assign(
       this.options,
       { params: new HttpParams().set('plot', "full") }
@@ -33,6 +37,10 @@ export class FilmService {
   }
 
   getFilmByTitle(title: string): Observable<SingularResult> {
+    if (title.trim().length == 0) {
+      return of(new SingularResult());
+    }
+
     const options = Object.assign(
       this.options,
       { params: new HttpParams() }
@@ -47,6 +55,10 @@ export class FilmService {
   }
 
   searchFilms(title: string): Observable<PluralResult> {
+    if (title.trim().length == 0) {
+      return of(new PluralResult());
+    }
+
     const options = Object.assign(
       this.options,
       { params: new HttpParams() }
