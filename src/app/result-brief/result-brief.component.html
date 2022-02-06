@@ -22,7 +22,7 @@
                 </div>
             </ul>
 
-            <ng-container *ngIf="film.Response == 'False'">
+            <ng-container *ngIf="film.Response == 'False' && !films.hasValues()">
                 <div>
                     Film not found.
                 </div>
