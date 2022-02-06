@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, forkJoin } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap, tap
 } from 'rxjs/operators';
@@ -41,12 +41,12 @@ export class SearchService {
     );
   }
 
-  updatePluralResult() {
+  private updatePluralResult() {
     console.log("SearchService updatePluralResult(): " + this.currentSearchTerm);
     this.plural$ = this.filmService.searchFilms(this.currentSearchTerm ?? "", this.currentResultPage);
   }
 
-  setPagingInfo(term: string, page: number) {
+  private setPagingInfo(term: string, page: number) {
     this.currentSearchTerm = term;
     this.currentResultPage = page;
   }

@@ -1,10 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-
-
-import { FilmService } from '../services/film.service';
-import { PluralResult } from '../plural.result';
-import { SingularResult } from '../singular.result';
+import { Component } from '@angular/core';
 import { SearchService } from '../services/search.service';
 
 @Component({
