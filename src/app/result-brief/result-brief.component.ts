@@ -12,13 +12,9 @@ export class ResultBriefComponent implements OnInit {
 
   @Input() film$?: Observable<SingularResult>;
   @Input() films$?: Observable<PluralResult>;
-  selectedId: string;
 
-  constructor() {
-    this.selectedId = "";
-  }
+  constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit() { }
 
 }
