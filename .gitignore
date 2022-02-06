@@ -45,8 +45,10 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# project
 /*.txt
-api.ts
 __pycache__
 venv
+api.ts
 /_backend/config.json
+/*.bat
