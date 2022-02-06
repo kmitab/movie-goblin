@@ -1,5 +1,5 @@
 <div *ngIf="film$ | async as film">
-    <ng-container *ngIf="film.Response=='True'">
+    <ng-container *ngIf="film.Response == 'True'">
         <div class="list-group">
             <a routerLink="/i/{{film.imdbID}}" routerLinkActive="active" class="list-group-item list-group-item-action">
                 <h5>{{film.Title}}, {{film.Year}} ({{film.Type}})</h5>
@@ -8,11 +8,10 @@
                     <p>{{film.Plot}}</p>
                 </ng-container>
             </a>
-
         </div>
     </ng-container>
 
-    <div *ngIf="films$ | async as films">
+    <ng-container *ngIf="films$ | async as films">
         <ul class="list-group">
             <div *ngFor="let film_ of films.getSearchArray()">
                 <ng-container *ngIf="film_.imdbID != film.imdbID">
@@ -23,5 +22,13 @@
                 </ng-container>
             </div>
         </ul>
-    </div>
+
+        <ng-container *ngIf="film.Response == 'False' && !films.hasValues()">
+            <div>
+                Film not found.
+            </div>
+        </ng-container>
+
+    </ng-container>
+
 </div>
