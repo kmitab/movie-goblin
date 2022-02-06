@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { forkJoin, Observable, combineLatest, zip } from 'rxjs';
 import { PluralResult } from '../plural.result';
+import { SearchService } from '../services/search.service';
 import { SingularResult } from '../singular.result';
 
 @Component({
@@ -10,11 +11,15 @@ import { SingularResult } from '../singular.result';
 })
 export class ResultBriefComponent implements OnInit {
 
-  @Input() film$?: Observable<SingularResult>;
-  @Input() films$?: Observable<PluralResult>;
+  combined$: Observable<[SingularResult, PluralResult]>;
+  // singular$: Observable<SingularResult>;
+  // plural$: Observable<PluralResult>;
 
-  constructor() { }
+  constructor(private searchService: SearchService) {
+    // this.singular$ = this.searchService.singular$;
+    // this.plural$ = this.searchService.plural$;
+    this.combined$ = zip([this.searchService.singular$, this.searchService.plural$]);
+  }
 
   ngOnInit() { }
-
 }

@@ -1,6 +1,6 @@
-<div *ngIf="film$ | async as film">
-    <ng-container *ngIf="film.Response == 'True'">
-        <div class="list-group">
+<div *ngIf="combined$ | async as combined">
+    <ng-container *ngIf="combined[0] as film">
+        <div *ngIf="film.Response == 'True'" class="list-group">
             <a routerLink="/i/{{film.imdbID}}" routerLinkActive="active" class="list-group-item list-group-item-action">
                 <h5>{{film.Title}}, {{film.Year}} ({{film.Type}})</h5>
                 <p>{{film.Genre}}</p>
@@ -9,26 +9,25 @@
                 </ng-container>
             </a>
         </div>
+
+        <div *ngIf="combined[1] as films">
+            <ul class="list-group">
+                <div *ngFor="let film_ of films.getSearchArray()">
+                    <ng-container *ngIf="film_.imdbID != film.imdbID">
+                        <a routerLink="/i/{{film_.imdbID}}" routerLinkActive="active"
+                            class="list-group-item list-group-item-action">
+                            {{film_.Title}}, {{film_.Year}} ({{film_.Type}})
+                        </a>
+                    </ng-container>
+                </div>
+            </ul>
+
+            <ng-container *ngIf="film.Response == 'False'">
+                <div>
+                    Film not found.
+                </div>
+            </ng-container>
+
+        </div>
     </ng-container>
-
-    <ng-container *ngIf="films$ | async as films">
-        <ul class="list-group">
-            <div *ngFor="let film_ of films.getSearchArray()">
-                <ng-container *ngIf="film_.imdbID != film.imdbID">
-                    <a routerLink="/i/{{film_.imdbID}}" routerLinkActive="active"
-                        class="list-group-item list-group-item-action">
-                        {{film_.Title}}, {{film_.Year}} ({{film_.Type}})
-                    </a>
-                </ng-container>
-            </div>
-        </ul>
-
-        <ng-container *ngIf="film.Response == 'False' && !films.hasValues()">
-            <div>
-                Film not found.
-            </div>
-        </ng-container>
-
-    </ng-container>
-
 </div>
