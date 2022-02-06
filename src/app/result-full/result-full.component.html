@@ -1,5 +1,5 @@
 <div *ngIf="selectedFilm$ | async as film">
-    <ng-container *ngIf="film.Response=='True'">
+    <ng-container *ngIf="film.Response=='True'; else elseBlock">
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -54,7 +54,7 @@
             </div>
         </div>
     </ng-container>
-    <ng-container *ngIf="film.Response=='False'">
-        <b>404</b>
-    </ng-container>
+    <ng-template #elseBlock>
+        <b>404 todo</b>
+    </ng-template>
 </div>
