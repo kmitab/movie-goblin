@@ -54,14 +54,14 @@ export class FilmService {
       );
   }
 
-  searchFilms(title: string): Observable<PluralResult> {
+  searchFilms(title: string, page?: number): Observable<PluralResult> {
     if (title.trim().length == 0) {
       return of(new PluralResult());
     }
 
     const options = Object.assign(
       this.options,
-      { params: new HttpParams() }
+      { params: new HttpParams().set('page', page ? page : 1) }
     );
 
     return this.http.get<PluralResponse>(this.apiUrl + `/s/${title}`, options)
