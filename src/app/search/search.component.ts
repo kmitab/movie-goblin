@@ -17,26 +17,47 @@ export class SearchComponent implements OnInit {
 
   singular$?: Observable<SingularResult>;
   plural$?: Observable<PluralResult>;
+  currentResultPage?: number;
+  currentSearchTerm?: string;
   private searchSingular = new Subject<string>();
 
   constructor(private filmService: FilmService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.singular$ = this.searchSingular.pipe(
       debounceTime(300), // wait 300 ms after each keystroke
       distinctUntilChanged(), // ignore if new = previous term
-      tap((term: string) => this.updatePluralResult(term)),
-      // switch to new search observable each time the term changes
+      tap((term: string) => this.setPagingInfo(term, 1)),
+      tap(() => this.updatePluralResult()),
       switchMap((term: string) => this.filmService.getFilmByTitle(term)),
     );
   }
 
   // Push a search term into the observable stream.
-  search(term: string): void {
+  search(term: string) {
     this.searchSingular.next(term);
   }
 
-  updatePluralResult(term: string) {
-    this.plural$ = this.filmService.searchFilms(term);
+  updatePluralResult() {
+    this.plural$ = this.filmService.searchFilms(this.currentSearchTerm ?? "", this.currentResultPage);
+  }
+
+  setPagingInfo(term: string, page: number) {
+    this.currentSearchTerm = term;
+    this.currentResultPage = page;
+  }
+
+  nextResultPage() {
+    if (this.currentResultPage) {
+      this.currentResultPage++;
+      this.updatePluralResult();
+    }
+  }
+
+  previousResultPage() {
+    if (this.currentResultPage && this.currentResultPage > 1) {
+      this.currentResultPage--;
+      this.updatePluralResult();
+    }
   }
 }
