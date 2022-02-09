@@ -1,21 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, zip } from 'rxjs';
-import { PluralResult } from '../plural.result';
+import { Component } from '@angular/core';
 import { SearchService } from '../services/search.service';
-import { SingularResult } from '../singular.result';
 
 @Component({
   selector: 'app-result-brief',
   templateUrl: './result-brief.component.html',
   styleUrls: ['./result-brief.component.css']
 })
-export class ResultBriefComponent implements OnInit {
+export class ResultBriefComponent {
 
-  combined$: Observable<[SingularResult, PluralResult]>;
+  pageNumber = 1;
 
-  constructor(private searchService: SearchService) {
-    this.combined$ = zip([this.searchService.singular$, this.searchService.plural$]);
+  constructor(public searchService: SearchService) { }
+
+  nextPage() {
+    this.pageNumber++;
+    this.searchService.ioCombined.next({ page: this.pageNumber });
   }
 
-  ngOnInit() { }
 }

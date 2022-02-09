@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject, zip } from 'rxjs';
 import {
-  debounceTime, distinctUntilChanged, switchMap, tap
+  debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
 
-import { PluralResult } from '../plural.result';
-import { SingularResult } from '../singular.result';
 import { FilmService } from './film.service';
 
 @Injectable({
@@ -13,60 +11,23 @@ import { FilmService } from './film.service';
 })
 export class SearchService {
 
-  singular$: Observable<SingularResult>;
-  plural$: Observable<PluralResult>;
-  searchSingular = new Subject<string>();
-  searchPlural = new Subject<string>();
-  currentResultPage?: number;
-  currentSearchTerm?: string;
+  ioCombined = new Subject<{ term?: string, page?: number; }>();
+  oCombined$ = this.ioCombined.pipe(
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap(({ term: term, page: page }) => this.searchCombined(term, page)),
+  );
+  private currentSearchTerm?: string;
 
-  constructor(private filmService: FilmService) {
-    console.log("SearchService constructor()");
+  constructor(private filmService: FilmService) { }
 
-    this.singular$ = this.searchSingular.pipe(
-      debounceTime(300), // wait 300 ms after each keystroke
-      distinctUntilChanged(), // ignore if new = previous term
-      switchMap((term: string) => this.filmService.getFilmByTitle(term)),
-    );
-
-    this.plural$ = this.searchPlural.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      tap((term: string) => this.setPagingInfo(term, 1)),
-      switchMap(
-        () => this.filmService.searchFilms(
-          this.currentSearchTerm ?? "", this.currentResultPage
-        )
-      )
-    );
+  searchCombined(term?: string, page?: number) {
+    this.currentSearchTerm = term ?? this.currentSearchTerm ?? "";
+    console.log(`currentSearchTerm: ${this.currentSearchTerm}, page: ${page}`);
+    return zip([
+      this.filmService.getFilmByTitle(this.currentSearchTerm),
+      this.filmService.searchFilms(this.currentSearchTerm, page)
+    ]);
   }
 
-  private updatePluralResult() {
-    console.log("SearchService updatePluralResult(): " + this.currentSearchTerm);
-    this.plural$ = this.filmService.searchFilms(this.currentSearchTerm ?? "", this.currentResultPage);
-  }
-
-  private setPagingInfo(term: string, page: number) {
-    this.currentSearchTerm = term;
-    this.currentResultPage = page;
-  }
-
-  combinedSearch(term: string) {
-    this.searchSingular.next(term);
-    this.searchPlural.next(term);
-  }
-
-  nextResultPage() {
-    if (this.currentResultPage) {
-      this.currentResultPage++;
-      this.updatePluralResult();
-    }
-  }
-
-  previousResultPage() {
-    if (this.currentResultPage && this.currentResultPage > 1) {
-      this.currentResultPage--;
-      this.updatePluralResult();
-    }
-  }
 }

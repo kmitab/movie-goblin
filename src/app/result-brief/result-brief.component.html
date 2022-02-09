@@ -1,6 +1,6 @@
-<div *ngIf="combined$ | async as combined">
+<div *ngIf="searchService.oCombined$ | async as combined">
     <ng-container *ngIf="combined[0] as film">
-        <div *ngIf="film.Response == 'True'" class="list-group">
+        <div *ngIf="film.Response == 'True' && pageNumber == 1" class="list-group">
             <a routerLink="/i/{{film.imdbID}}" routerLinkActive="active" class="list-group-item list-group-item-action">
                 <h5>{{film.Title}}, {{film.Year}} ({{film.Type}})</h5>
                 <p>{{film.Genre}}</p>
@@ -22,12 +22,24 @@
                 </div>
             </ul>
 
-            <ng-container *ngIf="film.Response == 'False' && !films.hasValues()">
+            <ng-container *ngIf="!films.hasValues()">
                 <div>
                     Film not found.
                 </div>
             </ng-container>
 
         </div>
+
     </ng-container>
+
+    <button (click)="nextPage()">next page</button>
 </div>
+
+
+
+
+
+<!-- 
+    film.Response == 'False' 
+    <button (click)="">next page</button>
+-->
