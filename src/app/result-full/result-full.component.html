@@ -1,58 +1,56 @@
-<div *ngIf="selectedFilm$ | async as film">
+<div *ngIf="selectedFilm$ | async as film" class="container">
     <ng-container *ngIf="film.Response=='True'; else elseBlock">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <h1>{{film.Title}}</h1>
-                    <h3>{{film.Type | titlecase}}, {{film.Year}}</h3>
-                    <h5>{{film.Genre}}</h5>
 
-                    <dl class="row py-3">
-                        <ng-container *ngIf="film.Director">
-                            <dt class="col-sm-4 custom-trunc">Directed by</dt>
-                            <dd class="col-sm-8">{{film.Director}}</dd>
-                        </ng-container>
-                        <ng-container *ngIf="film.Writer">
-                            <dt class="col-sm-4 custom-trunc">Writen by</dt>
-                            <dd class="col-sm-8">{{film.Writer}}</dd>
-                        </ng-container>
-                        <ng-container *ngIf="film.Actors">
-                            <dt class="col-sm-4 custom-trunc">Starring</dt>
-                            <dd class="col-sm-8">{{film.Actors}}</dd>
-                        </ng-container>
+        <div class="row">
+            <div class="col">
+                <h1>{{film.Title}}</h1>
+                <h3>{{film.Type | titlecase}}, {{film.Year}}</h3>
+                <h5>{{film.Genre}}</h5>
 
-                        <ng-container *ngIf="film.Language">
-                            <dt class="col-sm-4 custom-trunc">Language</dt>
-                            <dd class="col-sm-8">{{film.Language}}</dd>
-                        </ng-container>
-                        <ng-container *ngIf="film.Runtime">
-                            <dt class="col-sm-4 custom-trunc">Runtime</dt>
-                            <dd class="col-sm-8">{{film.Runtime}}</dd>
-                        </ng-container>
-                    </dl>
-                </div>
-                <div class="col">
-                    <ng-container *ngIf="film.Poster">
-                        <div class="card">
-                            <img [src]=film.Poster class="img-fluid shadow bg-body">
-                            <div class="card-body border-top">
-                                <div *ngFor="let rating of film.Ratings">
-                                    <i>{{rating.Source}}: </i>
-                                    <b>{{rating.Value}}</b>
-                                </div>
-                            </div>
-                        </div>
+                <dl class="row py-3">
+                    <ng-container *ngIf="film.Director">
+                        <dt class="col-sm-4 custom-trunc">Directed by</dt>
+                        <dd class="col-sm-8">{{film.Director}}</dd>
                     </ng-container>
-                </div>
-            </div>
-            <div class="row py-5">
-                <div *ngIf="film.Plot">
-                    <h3>Plot Summary</h3>
-                    <p class="text-justify">{{film.Plot}}</p>
-                </div>
+                    <ng-container *ngIf="film.Writer">
+                        <dt class="col-sm-4 custom-trunc">Writen by</dt>
+                        <dd class="col-sm-8">{{film.Writer}}</dd>
+                    </ng-container>
+                    <ng-container *ngIf="film.Actors">
+                        <dt class="col-sm-4 custom-trunc">Starring</dt>
+                        <dd class="col-sm-8">{{film.Actors}}</dd>
+                    </ng-container>
 
+                    <ng-container *ngIf="film.Language">
+                        <dt class="col-sm-4 custom-trunc">Language</dt>
+                        <dd class="col-sm-8">{{film.Language}}</dd>
+                    </ng-container>
+                    <ng-container *ngIf="film.Runtime">
+                        <dt class="col-sm-4 custom-trunc">Runtime</dt>
+                        <dd class="col-sm-8">{{film.Runtime}}</dd>
+                    </ng-container>
+                </dl>
+            </div>
+            <div *ngIf="film.Poster" class="col-6">
+                <div class="card">
+                    <img [src]=film.Poster class="img-fluid shadow bg-body">
+                    <div class="card-body border-top">
+                        <div *ngFor="let rating of film.Ratings">
+                            <i>{{rating.Source}}: </i>
+                            <b>{{rating.Value}}</b>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div *ngIf="film.Plot" class="row py-5">
+            <div class="col">
+                <h3>Plot Summary</h3>
+                <p class="text-justify">{{film.Plot}}</p>
+            </div>
+        </div>
+
     </ng-container>
     <ng-template #elseBlock>
         <b>404 todo</b>

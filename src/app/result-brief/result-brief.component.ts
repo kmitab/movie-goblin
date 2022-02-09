@@ -34,4 +34,9 @@ export class ResultBriefComponent implements OnInit {
     this.searchService.ioCombined.next({ page: this.pageNumber });
   }
 
+  prevPage() {
+    this.pageNumber--;
+    this.searchService.ioCombined.next({ page: this.pageNumber });
+  }
+
 }
