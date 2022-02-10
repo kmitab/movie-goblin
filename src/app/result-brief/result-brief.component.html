@@ -1,4 +1,4 @@
-<div *ngIf="oCombined$ | async as combined" class="container">
+<div *ngIf="oCombined$ | async as combined" class="container-fluid">
     <ng-container *ngIf="combined[0] as film">
 
         <div class="row">
@@ -25,7 +25,10 @@
                             <ng-container *ngIf="film_.imdbID != film.imdbID">
                                 <a routerLink="/i/{{film_.imdbID}}" routerLinkActive="active"
                                     class="list-group-item list-group-item-action">
-                                    {{film_.Title}}, {{film_.Year}} ({{film_.Type}})
+                                    <ul class="list-unstyled">
+                                        <li class="text-truncate">{{film_.Title}}</li>
+                                        <li>{{film_.Type | titlecase}}, {{film_.Year}}</li>
+                                    </ul>
                                 </a>
                             </ng-container>
                         </div>

@@ -1,4 +1,4 @@
-<div *ngIf="selectedFilm$ | async as film" class="container">
+<div *ngIf="selectedFilm$ | async as film" class="container-fluid">
     <ng-container *ngIf="film.Response=='True'; else elseBlock">
 
         <div class="row">
@@ -31,7 +31,7 @@
                     </ng-container>
                 </dl>
             </div>
-            <div *ngIf="film.Poster" class="col-6">
+            <div *ngIf="film.Poster" class="col">
                 <div class="card">
                     <img [src]=film.Poster class="img-fluid shadow bg-body">
                     <div class="card-body border-top">
