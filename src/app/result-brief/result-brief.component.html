@@ -1,9 +1,9 @@
-<div *ngIf="oCombined$ | async as combined" class="container-fluid">
-    <ng-container *ngIf="combined[0] as film">
+<div *ngIf="this.searchService.oCombined$ | async as combined" class="container-fluid">
 
+    <ng-container *ngIf="combined[0] as film">
         <div class="row">
             <div class="column">
-                <div *ngIf="film.Response == 'True' && pageNumber == 1" class="list-group">
+                <div *ngIf="film.Response == 'True'" class="list-group">
                     <a routerLink="/i/{{film.imdbID}}" routerLinkActive="active"
                         class="list-group-item list-group-item-action">
                         <h5>{{film.Title}}, {{film.Year}} ({{film.Type}})</h5>
@@ -15,49 +15,50 @@
                 </div>
             </div>
         </div>
-
-        <ng-container *ngIf="combined[1] as films">
-
-            <div class="row">
-                <div class="column">
-                    <ul class="list-group">
-                        <div *ngFor="let film_ of films.getSearchArray()">
-                            <ng-container *ngIf="film_.imdbID != film.imdbID">
-                                <a routerLink="/i/{{film_.imdbID}}" routerLinkActive="active"
-                                    class="list-group-item list-group-item-action">
-                                    <ul class="list-unstyled">
-                                        <li class="text-truncate">{{film_.Title}}</li>
-                                        <li>{{film_.Type | titlecase}}, {{film_.Year}}</li>
-                                    </ul>
-                                </a>
-                            </ng-container>
-                        </div>
-                    </ul>
-                </div>
-            </div>
-
-            <div *ngIf="films.getNumberOfPages() > 1; else nothingFound" class="container pt-3">
-                <div class="row align-items-center">
-                    <div class="col text-center">
-                        <button type="button" [disabled]="pageNumber <= 1" (click)="prevPage()"
-                            class="btn btn-default">Back</button>
-                    </div>
-                    <div class="col text-center">
-                        <b>{{pageNumber}}</b> / {{films.getNumberOfPages()}}
-                    </div>
-                    <div class="col text-center">
-                        <button type="button" [disabled]="films.getNumberOfPages() <= pageNumber" (click)="nextPage()"
-                            class="btn btn-default">More</button>
-                    </div>
-                </div>
-            </div>
-
-            <ng-template #nothingFound>
-                <div *ngIf="film.Response == 'False' && !films.hasValues()">
-                    <i>Nothing found.</i>
-                </div>
-            </ng-template>
-
-        </ng-container>
     </ng-container>
+
+    <ng-container *ngIf="combined[1] as films">
+
+        <div class="row">
+            <div class="column">
+                <ul class="list-group">
+                    <div *ngFor="let film of films.getSearchArray()">
+                        <ng-container *ngIf="film.imdbID != combined[0].imdbID">
+                            <a routerLink="/i/{{film.imdbID}}" routerLinkActive="active"
+                                class="list-group-item list-group-item-action">
+                                <ul class="list-unstyled">
+                                    <li class="text-truncate">{{film.Title}}</li>
+                                    <li>{{film.Type | titlecase}}, {{film.Year}}</li>
+                                </ul>
+                            </a>
+                        </ng-container>
+                    </div>
+                </ul>
+            </div>
+        </div>
+
+        <div *ngIf="films.getNumberOfPages() > 1; else nothingFound" class="container pt-3">
+            <div class="row align-items-center">
+                <div class="col text-center">
+                    <button type="button" [disabled]="this.searchService.getPageNumber() <= 1"
+                        (click)="this.searchService.prevPage()" class="btn btn-default">Back</button>
+                </div>
+                <div class="col text-center">
+                    <b>{{this.searchService.getPageNumber()}}</b> / {{films.getNumberOfPages()}}
+                </div>
+                <div class="col text-center">
+                    <button type="button" [disabled]="films.getNumberOfPages() <= this.searchService.getPageNumber()"
+                        (click)="this.searchService.nextPage()" class="btn btn-default">More</button>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #nothingFound>
+            <div *ngIf="combined[0].Response == 'False' && !films.hasValues()">
+                <i>Nothing found.</i>
+            </div>
+        </ng-template>
+
+    </ng-container>
+
 </div>

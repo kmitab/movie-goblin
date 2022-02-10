@@ -56,7 +56,7 @@ export class FilmService {
       );
   }
 
-  searchFilms(title: string, page?: number): Observable<PluralResult> {
+  searchFilms(title?: string, page?: number): Observable<PluralResult> {
     title = title ? title.trim() : title;
     if (!title) {
       return of(new PluralResult());
