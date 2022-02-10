@@ -18,8 +18,9 @@ export class FilmService {
 
   constructor(private http: HttpClient) { }
 
-  getFilmById(imdbID: string): Observable<SingularResult> {
-    if (imdbID.trim().length == 0) {
+  getFilmById(imdbID?: string): Observable<SingularResult> {
+    imdbID = imdbID ? imdbID.trim() : imdbID;
+    if (!imdbID) {
       return of(new SingularResult());
     }
 
@@ -36,8 +37,9 @@ export class FilmService {
       );
   }
 
-  getFilmByTitle(title: string): Observable<SingularResult> {
-    if (title.trim().length == 0) {
+  getFilmByTitle(title?: string): Observable<SingularResult> {
+    title = title ? title.trim() : title;
+    if (!title) {
       return of(new SingularResult());
     }
 
@@ -55,7 +57,8 @@ export class FilmService {
   }
 
   searchFilms(title: string, page?: number): Observable<PluralResult> {
-    if (title.trim().length == 0) {
+    title = title ? title.trim() : title;
+    if (!title) {
       return of(new PluralResult());
     }
 
