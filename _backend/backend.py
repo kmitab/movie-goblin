@@ -56,24 +56,24 @@ app.add_middleware(
 
 
 @app.get("/t/{t}")
-async def read_item(t: str, plot: Optional[str] = "short"):
+async def read_item(t: str, plot: Optional[str] = "short", type: Optional[str] = ""):
     async with httpx.AsyncClient() as client:
-        r = await client.get(f"{base_url}&t={t}&plot={plot}")
+        r = await client.get(f"{base_url}&t={t}&plot={plot}&type={type}")
         print(r.url)
         return r.json()
 
 
 @app.get("/i/{i}")
-async def read_item(i: str, plot: Optional[str] = "short"):
+async def read_item(i: str, plot: Optional[str] = "short", type: Optional[str] = ""):
     async with httpx.AsyncClient() as client:
-        r = await client.get(f"{base_url}&i={i}&plot={plot}")
+        r = await client.get(f"{base_url}&i={i}&plot={plot}&type={type}")
         print(r.url)
         return r.json()
 
 
 @app.get("/s/{s}")
-async def read_item(s: str, page: Optional[int] = 1):
+async def read_item(s: str, page: Optional[int] = 1, type: Optional[str] = ""):
     async with httpx.AsyncClient() as client:
-        r = await client.get(f"{base_url}&s={s}&page={page}")
+        r = await client.get(f"{base_url}&s={s}&page={page}&type={type}")
         print(r.url)
         return r.json()
