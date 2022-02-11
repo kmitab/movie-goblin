@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject, zip } from 'rxjs';
+import { BehaviorSubject, of, zip } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap, tap
 } from 'rxjs/operators';
@@ -18,20 +18,22 @@ enum ResultType {
 })
 export class SearchService {
 
-  pageNumberChange = new BehaviorSubject<number>(1);
-  pageNumberOutput$ = this.pageNumberChange.pipe(
-    distinctUntilChanged(),
-    tap(n => console.log(`pageNumberOutput: ${n}`)),
-  );
-  combinedChange = new Subject<{ term?: string, page?: number, type?: ResultType; }>();
-  combinedOutput$ = this.combinedChange.pipe(
+  private currentSearchTerm?: string;
+  private currentPageNumber = 1;
+  private currentResultType = ResultType.All;
+
+  // main insertion point for data in this service
+  combinedChange = new BehaviorSubject<{ term?: string, page?: number, type?: ResultType; }>({});
+
+  combinedResults$ = this.combinedChange.pipe(
     debounceTime(300),
     distinctUntilChanged(),
     switchMap(({ term: term, page: page, type: type }) => this.search(term, page, type)),
   );
-  private currentSearchTerm?: string;
-  private currentPageNumber = 1;
-  private currentResultType = ResultType.All;
+  navigation$ = this.combinedChange.pipe(
+    distinctUntilChanged(),
+    switchMap(({ page: page }) => of(page)),
+  );
 
   constructor(private filmService: FilmService) { }
 
@@ -41,9 +43,6 @@ export class SearchService {
     this.currentSearchTerm = term ?? this.currentSearchTerm;
     this.currentPageNumber = page ?? this.currentPageNumber;
     this.currentResultType = type ?? this.currentResultType;
-
-    // update Subject/Observable announcing page change
-    this.pageNumberChange.next(this.currentPageNumber);
 
     console.log(`currentSearchTerm: ${this.currentSearchTerm}, page: ${page}`);
 
@@ -57,13 +56,11 @@ export class SearchService {
 
   nextPage() {
     this.currentPageNumber++;
-    this.pageNumberChange.next(this.currentPageNumber);
     this.combinedChange.next({ page: this.currentPageNumber });
   }
 
   prevPage() {
     this.currentPageNumber--;
-    this.pageNumberChange.next(this.currentPageNumber);
     this.combinedChange.next({ page: this.currentPageNumber });
   }
 

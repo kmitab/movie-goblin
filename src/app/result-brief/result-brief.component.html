@@ -1,6 +1,6 @@
-<div *ngIf="this.searchService.combinedOutput$ | async as combined" class="container-fluid">
+<div *ngIf="this.searchService.combinedResults$ | async as results" class="container-fluid">
 
-    <ng-container *ngIf="combined[0] as film">
+    <ng-container *ngIf="results[0] as film">
         <div class="row">
             <div class="column">
                 <div *ngIf="film.Response == 'True'" class="list-group">
@@ -17,13 +17,13 @@
         </div>
     </ng-container>
 
-    <ng-container *ngIf="combined[1] as films">
+    <ng-container *ngIf="results[1] as films">
 
         <div class="row">
             <div class="column">
                 <ul class="list-group">
                     <div *ngFor="let film of films.Search">
-                        <ng-container *ngIf="film.imdbID != combined[0].imdbID">
+                        <ng-container *ngIf="film.imdbID != results[0].imdbID">
                             <a routerLink="/i/{{film.imdbID}}" routerLinkActive="active"
                                 class="list-group-item list-group-item-action">
                                 <ul class="list-unstyled">
@@ -39,7 +39,7 @@
 
         <div *ngIf="films.totalPages as totalPages; else checkResponses" class="container pt-3">
             <ng-container *ngIf="totalPages > 1">
-                <ng-container *ngIf="this.searchService.pageNumberOutput$ | async as pageNumber">
+                <ng-container *ngIf="this.searchService.navigation$ | async as pageNumber">
                     <div class="row align-items-center">
                         <div class="col text-center">
                             <button type="button" [disabled]="pageNumber <= 1" (click)="this.searchService.prevPage()"
@@ -58,7 +58,7 @@
         </div>
 
         <ng-template #checkResponses>
-            <div *ngIf="combined[0].Response == 'False' && films.Response == 'False'">
+            <div *ngIf="results[0].Response == 'False' && films.Response == 'False'">
                 <i>Nothing found.</i>
             </div>
         </ng-template>
