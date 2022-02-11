@@ -45,9 +45,9 @@ export class SearchService {
 
     return zip([
       page == 1 // only get full film info for first page
-        ? this.filmService.getFilmByTitle(this.currentSearchTerm)
+        ? this.filmService.getFilmByTitle(this.currentSearchTerm, this.currentResultType)
         : this.filmService.getFilmByTitle(),
-      this.filmService.searchFilms(this.currentSearchTerm, page)
+      this.filmService.searchFilms(this.currentSearchTerm, page, this.currentResultType)
     ]);
   }
 
