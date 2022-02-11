@@ -11,6 +11,6 @@ export class SearchComponent {
   constructor(private searchService: SearchService) { }
 
   search(term: string) {
-    this.searchService.ioCombined.next({ "term": term, "page": 1 });
+    this.searchService.combinedChange.next({ "term": term, "page": 1 });
   }
 }

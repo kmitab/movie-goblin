@@ -1,4 +1,4 @@
-<div *ngIf="this.searchService.oCombined$ | async as combined" class="container-fluid">
+<div *ngIf="this.searchService.combinedOutput$ | async as combined" class="container-fluid">
 
     <ng-container *ngIf="combined[0] as film">
         <div class="row">
@@ -38,19 +38,21 @@
         </div>
 
         <div *ngIf="films.getNumberOfPages() > 1; else nothingFound" class="container pt-3">
-            <div class="row align-items-center">
-                <div class="col text-center">
-                    <button type="button" [disabled]="this.searchService.getPageNumber() <= 1"
-                        (click)="this.searchService.prevPage()" class="btn btn-default">Back</button>
+            <ng-container *ngIf="this.searchService.pageNumberOutput$ | async as pageNumber">
+                <div class="row align-items-center">
+                    <div class="col text-center">
+                        <button type="button" [disabled]="pageNumber <= 1" (click)="this.searchService.prevPage()"
+                            class="btn btn-default">Back</button>
+                    </div>
+                    <div class="col text-center">
+                        <b>{{pageNumber}}</b> / {{films.getNumberOfPages()}}
+                    </div>
+                    <div class="col text-center">
+                        <button type="button" [disabled]="films.getNumberOfPages() <= pageNumber"
+                            (click)="this.searchService.nextPage()" class="btn btn-default">More</button>
+                    </div>
                 </div>
-                <div class="col text-center">
-                    <b>{{this.searchService.getPageNumber()}}</b> / {{films.getNumberOfPages()}}
-                </div>
-                <div class="col text-center">
-                    <button type="button" [disabled]="films.getNumberOfPages() <= this.searchService.getPageNumber()"
-                        (click)="this.searchService.nextPage()" class="btn btn-default">More</button>
-                </div>
-            </div>
+            </ng-container>
         </div>
 
         <ng-template #nothingFound>
