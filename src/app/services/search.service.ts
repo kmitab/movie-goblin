@@ -17,7 +17,7 @@ export class SearchService {
   private currentResultType = ResultType.All;
 
   // main insertion point for data in this service
-  combinedChange = new BehaviorSubject<{ term?: string, page: number, type: ResultType; }>({
+  combinedChange = new BehaviorSubject<{ term?: string, page?: number, type?: ResultType; }>({
     page: this.currentPageNumber,
     type: this.currentResultType
   });
@@ -29,7 +29,10 @@ export class SearchService {
   );
   navigation$ = this.combinedChange.pipe(
     distinctUntilChanged(),
-    switchMap(({ page, type }) => of({ page, type })),
+    switchMap(({ page, type }) => of({
+      page: page ?? this.currentPageNumber,
+      type: type ?? this.currentResultType
+    })),
   );
 
   constructor(private filmService: FilmService) { }

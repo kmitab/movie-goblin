@@ -14,12 +14,11 @@ export class SearchComponent {
 
   constructor(public searchService: SearchService) { }
 
-  search(term?: string, type?: ResultType) {
-    console.log(`searching for: ${term}, ${type}`);
+  search(term: string, type?: ResultType) {
     this.searchService.combinedChange.next({
-      "term": term ?? "",
+      "term": term,
       "page": 1,
-      "type": type ?? ResultType.All
+      "type": type
     });
   }
 }
