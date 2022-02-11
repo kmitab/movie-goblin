@@ -1,17 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, of, zip } from 'rxjs';
 import {
-  debounceTime, distinctUntilChanged, switchMap, tap
+  debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
 
 import { FilmService } from './film.service';
-
-enum ResultType {
-  All = "",
-  Movie = "movie",
-  Series = "series",
-  Episode = "episode",
-}
+import { ResultType } from '../result.type';
 
 @Injectable({
   providedIn: 'root'
@@ -23,16 +17,19 @@ export class SearchService {
   private currentResultType = ResultType.All;
 
   // main insertion point for data in this service
-  combinedChange = new BehaviorSubject<{ term?: string, page?: number, type?: ResultType; }>({});
+  combinedChange = new BehaviorSubject<{ term?: string, page: number, type: ResultType; }>({
+    page: this.currentPageNumber,
+    type: this.currentResultType
+  });
 
   combinedResults$ = this.combinedChange.pipe(
     debounceTime(300),
     distinctUntilChanged(),
-    switchMap(({ term: term, page: page, type: type }) => this.search(term, page, type)),
+    switchMap(({ term, page, type }) => this.search(term, page, type)),
   );
   navigation$ = this.combinedChange.pipe(
     distinctUntilChanged(),
-    switchMap(({ page: page }) => of(page)),
+    switchMap(({ page, type }) => of({ page, type })),
   );
 
   constructor(private filmService: FilmService) { }
@@ -54,18 +51,22 @@ export class SearchService {
     ]);
   }
 
+  private announceState() {
+    this.combinedChange.next({ page: this.currentPageNumber, type: this.currentResultType });
+  }
+
   nextPage() {
     this.currentPageNumber++;
-    this.combinedChange.next({ page: this.currentPageNumber });
+    this.announceState();
   }
 
   prevPage() {
     this.currentPageNumber--;
-    this.combinedChange.next({ page: this.currentPageNumber });
+    this.announceState();
   }
 
   setResultType(resultType: ResultType) {
     this.currentResultType = resultType;
-    this.combinedChange.next({ type: this.currentResultType });
+    this.announceState();
   }
 }

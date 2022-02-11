@@ -39,17 +39,17 @@
 
         <div *ngIf="films.totalPages as totalPages; else checkResponses" class="container pt-3">
             <ng-container *ngIf="totalPages > 1">
-                <ng-container *ngIf="this.searchService.navigation$ | async as pageNumber">
+                <ng-container *ngIf="this.searchService.navigation$ | async as navigation">
                     <div class="row align-items-center">
                         <div class="col text-center">
-                            <button type="button" [disabled]="pageNumber <= 1" (click)="this.searchService.prevPage()"
-                                class="btn btn-default">Back</button>
+                            <button type="button" [disabled]="navigation.page <= 1"
+                                (click)="this.searchService.prevPage()" class="btn btn-default">Back</button>
                         </div>
                         <div class="col text-center">
-                            <b>{{pageNumber}}</b> / {{totalPages}}
+                            <b>{{navigation.page}}</b> / {{totalPages}}
                         </div>
                         <div class="col text-center">
-                            <button type="button" [disabled]="totalPages <= pageNumber"
+                            <button type="button" [disabled]="navigation.page >= totalPages"
                                 (click)="this.searchService.nextPage()" class="btn btn-default">More</button>
                         </div>
                     </div>
