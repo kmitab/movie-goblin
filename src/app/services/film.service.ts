@@ -14,18 +14,20 @@ import { SingularResult } from '../singular.result';
 export class FilmService {
 
   private apiUrl = "http://127.0.0.1:8000";
-  private options = { responseType: 'json' as const };
+  private sharedOptions = { responseType: 'json' as const };
 
   constructor(private http: HttpClient) { }
 
   getFilmById(imdbID?: string): Observable<SingularResult> {
+
+    // if imdbID is None: return object_with_empty_body
     imdbID = imdbID ? imdbID.trim() : imdbID;
     if (!imdbID) {
       return of(new SingularResult());
     }
 
     const options = Object.assign(
-      this.options,
+      this.sharedOptions,
       { params: new HttpParams().set('plot', "full") }
     );
 
@@ -37,15 +39,21 @@ export class FilmService {
       );
   }
 
-  getFilmByTitle(title?: string): Observable<SingularResult> {
+  getFilmByTitle(title?: string, type?: string): Observable<SingularResult> {
+
+    // if title is None: return object_with_empty_body
     title = title ? title.trim() : title;
     if (!title) {
       return of(new SingularResult());
     }
 
+    let params = new HttpParams();
+    if (type)
+      params.append("type", type);
+
     const options = Object.assign(
-      this.options,
-      { params: new HttpParams() }
+      this.sharedOptions,
+      { params }
     );
 
     return this.http.get<SingularResponse>(this.apiUrl + `/t/${title}`, options)
@@ -56,15 +64,23 @@ export class FilmService {
       );
   }
 
-  searchFilms(title?: string, page?: number): Observable<PluralResult> {
+  searchFilms(title?: string, page?: number, type?: string): Observable<PluralResult> {
+
+    // if title is None: return object_with_empty_body
     title = title ? title.trim() : title;
     if (!title) {
       return of(new PluralResult());
     }
 
+    let params = new HttpParams();
+    if (page)
+      params = params.append("page", page);
+    if (type)
+      params = params.append("type", type);
+
     const options = Object.assign(
-      this.options,
-      { params: new HttpParams().set('page', page ? page : 1) }
+      this.sharedOptions,
+      { params }
     );
 
     return this.http.get<PluralResponse>(this.apiUrl + `/s/${title}`, options)
