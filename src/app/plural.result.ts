@@ -1,31 +1,21 @@
 import { PluralResponse } from "./plural.response";
 import { FilmBrief } from "./plural.response";
 
-export class PluralResult {
+export class PluralResult implements PluralResponse {
 
-    private pluralResponse?: PluralResponse;
+    Search: FilmBrief[];
+    totalResults: string;
+    Response: string;
+    totalPages: number;
 
     constructor(pluralRequest?: PluralResponse) {
-        this.pluralResponse = pluralRequest;
+        this.Search = pluralRequest ? pluralRequest.Search : [];
+        this.totalResults = pluralRequest ? pluralRequest.totalResults : "0";
+        this.Response = pluralRequest ? pluralRequest.Response : "...";
+        this.totalPages = pluralRequest ? this.getTotalPages(pluralRequest.totalResults) : 0;
     }
 
-    public hasValues(): boolean {
-        if (this.pluralResponse &&
-            this.pluralResponse.Response == "True" &&
-            this.pluralResponse.Search.length > 0)
-            return true;
-        return false;
-    }
-
-    public getNumberOfPages(): number {
-        if (this.hasValues()) {
-            return Math.ceil(Number(this.pluralResponse?.totalResults) / 10);
-        }
-        return 0;
-    }
-
-    public getSearchArray(): FilmBrief[] {
-        return (!this.pluralResponse || this.pluralResponse.Response == "False")
-            ? [] : this.pluralResponse.Search;
+    private getTotalPages(numberOfResults: string): number {
+        return Math.ceil(Number(numberOfResults) / 10) || 0;
     }
 }
