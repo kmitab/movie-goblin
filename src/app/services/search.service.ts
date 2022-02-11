@@ -17,6 +17,7 @@ export class SearchService {
   private currentResultType = ResultType.All;
 
   // main insertion point for data in this service
+  // service keeps state, has initial state, so argument requirements are loose
   combinedChange = new BehaviorSubject<{ term?: string, page?: number, type?: ResultType; }>({
     page: this.currentPageNumber,
     type: this.currentResultType
@@ -47,10 +48,10 @@ export class SearchService {
     console.log(`currentSearchTerm: ${this.currentSearchTerm}, page: ${page}`);
 
     return zip([
-      page == 1 // only get full film info for first page
+      this.currentPageNumber == 1 // only get full film info for first page
         ? this.filmService.getFilmByTitle(this.currentSearchTerm, this.currentResultType)
         : this.filmService.getFilmByTitle(),
-      this.filmService.searchFilms(this.currentSearchTerm, page, this.currentResultType)
+      this.filmService.searchFilms(this.currentSearchTerm, this.currentPageNumber, this.currentResultType)
     ]);
   }
 
