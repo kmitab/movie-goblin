@@ -1,5 +1,14 @@
-<div class="py-5">
+<div class="pt-5">
     <input #searchBox (input)="search(searchBox.value)" class="form-control" placeholder="Search..." />
 </div>
-
-<!-- <input #searchBox id="search-box" (input)="search(searchBox.value)" class="form-control" placeholder="Search..." /> -->
+<div class="pt-3 pb-3">
+    <ng-container *ngIf="this.searchService.navigation$ | async as navigation">
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <ng-container *ngFor="let t of resultType | keyvalue">
+                <input type="radio" class="btn-check" name={{t.key}} id={{t.key}} autocomplete="off"
+                    [checked]="t.value == navigation.type">
+                <label (click)="search(searchBox.value, t.value)" class="btn btn-outline-primary">{{t.key}}</label>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>

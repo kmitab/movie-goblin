@@ -10,15 +10,16 @@ import { ResultType } from '../result.type';
 })
 export class SearchComponent {
 
-  currentResultType = ResultType.All;
+  resultType = ResultType;
 
-  constructor(private searchService: SearchService) { }
+  constructor(public searchService: SearchService) { }
 
-  search(term: string) {
+  search(term?: string, type?: ResultType) {
+    console.log(`searching for: ${term}, ${type}`);
     this.searchService.combinedChange.next({
-      "term": term,
+      "term": term ?? "",
       "page": 1,
-      "type": this.currentResultType
+      "type": type ?? ResultType.All
     });
   }
 }
