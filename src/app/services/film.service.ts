@@ -49,7 +49,7 @@ export class FilmService {
 
     let params = new HttpParams();
     if (type)
-      params.append("type", type);
+      params = params.append("type", type);
 
     const options = Object.assign(
       this.sharedOptions,
