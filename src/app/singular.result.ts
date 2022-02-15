@@ -43,6 +43,12 @@ export class SingularResult implements SingularResponse {
                 if (typeof newValue == "string") {
                     this[key as keyof SingularResult] = (newValue == "N/A" ? "" : newValue) as any;
                     // newValue || "?" as any;
+
+                    // api issue where it sometimes returns seriesID starting with a single t
+                    if (key == "seriesID" && newValue != "" && !newValue.startsWith("tt")) {
+                        this[key as keyof SingularResult] = `t${newValue}` as any;
+                    }
+
                 } else if (newValue instanceof Array) {
                     this[key as keyof SingularResult] = newValue as any;
                 }
