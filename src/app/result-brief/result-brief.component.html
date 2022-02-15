@@ -1,6 +1,7 @@
 <div *ngIf="this.searchService.combinedResults$ | async as results" class="container-fluid">
 
     <ng-container *ngIf="results[0] as film">
+
         <div class="row">
             <div class="column">
                 <div *ngIf="film.Response == 'True'" class="list-group">
@@ -40,7 +41,7 @@
         <div *ngIf="films.totalPages as totalPages; else checkResponses" class="container pt-3">
             <ng-container *ngIf="totalPages > 1">
                 <ng-container *ngIf="this.searchService.navigation$ | async as navigation">
-                    <div class="row align-items-center">
+                    <div class="row align-items-center g-0">
                         <div class="col text-center">
                             <button type="button" [disabled]="navigation.page <= 1"
                                 (click)="this.searchService.prevPage()" class="btn btn-default">Back</button>

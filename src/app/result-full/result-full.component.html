@@ -30,6 +30,18 @@
                         <dd class="col-sm-8">{{film.Runtime}}</dd>
                     </ng-container>
                 </dl>
+
+                <ng-container *ngIf="film.Type =='episode' || film.Type == 'series'">
+                    <app-episodes [initData]="{
+                        imdbID: film.imdbID,
+                        Type: film.Type,
+                        seriesID: film.seriesID,
+                        totalSeasons: film.totalSeasons,
+                        Season: film.Season
+                    }">
+                    </app-episodes>
+                </ng-container>
+
             </div>
             <div *ngIf="film.Poster" class="col">
                 <div class="card">

@@ -1,0 +1,69 @@
+<div class="container-fluid px-0">
+
+    <div class="row align-items-start">
+
+        <div class="col-auto px-1">
+            <div class="dropdown">
+                <button (click)="onClickSeasons()" type="button" id="dropdownMenu1" data-bs-toggle="dropdown"
+                    class="btn btn-secondary dropdown-toggle">
+                    Seasons
+                </button>
+
+                <ul class="dropdown-menu">
+                    <ng-container *ngIf="episodesService.seasons$ | async as navigation">
+                        <li><button type="button" routerLink="/i/{{navigation.imdbID}}" active
+                                class="dropdown-item">Main
+                                page</button>
+                        </li>
+                        <li *ngFor="let i of navigation.seasonNumArray">
+                            <button type="button" (click)="onClickSeason(i)"
+                                [ngClass]="{'active': i == navigation.selectedSeason}" class="dropdown-item">
+                                Season {{i}}
+                            </button>
+                        </li>
+                    </ng-container>
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="col-auto px-1">
+            <div class="dropdown">
+                <button (click)="onClickEpisodes()" class="btn btn-secondary dropdown-toggle" type="button"
+                    id="dropdownMenu2" data-bs-toggle="dropdown">
+                    Episodes
+                </button>
+                <ul class="dropdown-menu">
+                    <ng-container *ngIf="episodesService.episodes$ | async as season">
+                        <li *ngFor="let episode of season.Episodes">
+                            <button type="button" routerLink="/i/{{episode.imdbID}}" routerLinkActive="active"
+                                class="dropdown-item">
+                                {{episode.Title}}
+                            </button>
+                        </li>
+                    </ng-container>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!--
+
+<ng-container *ngIf="totalSeasons > 0">
+    seasons: {{totalSeasons}}
+    <ng-container *ngIf="episodesService.selectedSeason$ | async as season">
+        <p *ngFor="let s of season.Episodes">{{s.Title}}</p>
+    </ng-container>
+
+</ng-container>
+
+<ng-container *ngIf="param$ | async as param">{{param["i"]}}</ng-container>
+<ng-container *ngIf="seasons > 0">
+    <ng-container *ngIf="season$ | async">
+
+    </ng-container>
+    <h1></h1>
+</ng-container>
+-->

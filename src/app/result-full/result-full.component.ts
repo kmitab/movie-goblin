@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 import { FilmService } from '../services/film.service';
@@ -12,19 +12,21 @@ import { SingularResult } from '../singular.result';
 })
 export class ResultFullComponent implements OnInit {
 
+  params?: Subscription;
   selectedFilm$?: Observable<SingularResult>;
 
-  constructor(private route: ActivatedRoute, private filmService: FilmService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private filmService: FilmService
+  ) { }
 
-  ngOnInit(): void {
-    this.updateSelectedFilm();
-    this.route.params.subscribe(() => this.updateSelectedFilm());
+  ngOnInit() {
+    this.params = this.route.params.subscribe(
+      params => this.selectedFilm$ = this.filmService.getFilmById(params["i"])
+    );
   }
 
-  updateSelectedFilm() {
-    const id = this.route.snapshot.paramMap.get('i');
-    if (id)
-      this.selectedFilm$ = this.filmService.getFilmById(id);
+  ngOnDestroy() {
+    this.params?.unsubscribe();
   }
-
 }

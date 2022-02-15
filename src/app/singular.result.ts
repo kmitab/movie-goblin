@@ -28,6 +28,9 @@ export class SingularResult implements SingularResponse {
     imdbID = this.loading;
     imdbRating = this.loading;
     imdbVotes = this.loading;
+    totalSeasons = this.loading;
+    seriesID = this.loading;
+    Season = this.loading;
 
     constructor(singularResponse?: SingularResponse) {
         if (singularResponse) this.updateValues(singularResponse);

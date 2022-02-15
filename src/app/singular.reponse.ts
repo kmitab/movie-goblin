@@ -24,4 +24,7 @@ export interface SingularResponse {
     imdbID: string;
     imdbRating: string;
     imdbVotes: string;
+    totalSeasons: string;
+    seriesID: string;
+    Season: string;
 }

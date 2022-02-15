@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { SearchComponent } from './search/search.component';
 import { ResultBriefComponent } from './result-brief/result-brief.component';
 import { ResultFullComponent } from './result-full/result-full.component';
+import { EpisodesComponent } from './episodes/episodes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     ResultBriefComponent,
-    ResultFullComponent
+    ResultFullComponent,
+    EpisodesComponent
   ],
   imports: [
     BrowserModule,

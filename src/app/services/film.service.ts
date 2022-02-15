@@ -4,9 +4,11 @@ import { Observable, of, tap } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { SingularResponse } from '../singular.reponse';
+import { SingularResult } from '../singular.result';
 import { PluralResponse } from '../plural.response';
 import { PluralResult } from '../plural.result';
-import { SingularResult } from '../singular.result';
+import { SeasonResponse } from '../season.response';
+import { SeasonResult } from '../season.result';
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +90,31 @@ export class FilmService {
         map((pluralResponse: PluralResponse) => new PluralResult(pluralResponse)),
         tap(console.log),
         catchError(this.handleError<PluralResult>("searchFilms", title, new PluralResult()))
+      );
+  }
+
+  getSeasonByFilmId({ imdbID, season }: { imdbID?: string, season?: number; }): Observable<SeasonResult> {
+
+    // if imdbID is None: return object_with_empty_body
+    imdbID = imdbID ? imdbID.trim() : imdbID;
+    if (!imdbID) {
+      return of(new SeasonResult());
+    }
+
+    let params = new HttpParams();
+    if (season)
+      params = params.append("season", season);
+
+    const options = Object.assign(
+      this.sharedOptions,
+      { params }
+    );
+
+    return this.http.get<SeasonResponse>(this.apiUrl + `/i/${imdbID}`, options)
+      .pipe(
+        map((response) => new SeasonResult(response)),
+        tap(console.log),
+        catchError(this.handleError<SeasonResult>("getSeasonByFilmId", imdbID, new SeasonResult()))
       );
   }
 

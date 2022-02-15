@@ -64,9 +64,17 @@ async def read_item(t: str, plot: Optional[str] = "short", type: Optional[str] =
 
 
 @app.get("/i/{i}")
-async def read_item(i: str, plot: Optional[str] = "short", type: Optional[str] = ""):
+async def read_item(
+    i: str,
+    plot: Optional[str] = "short",
+    type: Optional[str] = "",
+    season: Optional[int] = 0,
+):
     async with httpx.AsyncClient() as client:
-        r = await client.get(f"{base_url}&i={i}&plot={plot}&type={type}")
+        request_string = f"{base_url}&i={i}&plot={plot}&type={type}"
+        if season:
+            request_string = "".join((request_string, f"&Season={season}"))
+        r = await client.get(request_string)
         print(r.url)
         return r.json()
 
