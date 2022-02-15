@@ -14,7 +14,7 @@ export class EpisodesService {
     { imdbID: string; selectedSeason: number; totalSeasons: number | Observable<number>; }
   >({ imdbID: "", selectedSeason: 0, totalSeasons: 0 });
   seasons$ = this.seasons.pipe(
-    tap(params => console.log(`navigationMenu$: ${JSON.stringify(params)}`)),
+    tap(params => console.log(`seasons$: ${JSON.stringify(params)}`)),
     switchMap(params => {
       if (params.totalSeasons instanceof Observable) {
         return params.totalSeasons.pipe(
@@ -36,7 +36,7 @@ export class EpisodesService {
 
   episodes = new BehaviorSubject<{ imdbID: string, selectedSeason: number; }>({ imdbID: "", selectedSeason: 0 });
   episodes$ = this.episodes.pipe(
-    tap(params => console.log(`selectedSeason$: ${JSON.stringify(params)}`)),
+    tap(params => console.log(`episodes$: ${JSON.stringify(params)}`)),
     switchMap(params => {
       let cachedResult = this.episodesCacheService.getSeasonResult(params.imdbID, params.selectedSeason);
       if (!cachedResult) {
@@ -66,8 +66,8 @@ export class EpisodesService {
   seasonsFromEpisode(imdbID: string, season: number) {
     console.log(`seasonsFromEpisode`);
 
-    this.episodesCacheService.saveToCache({ imdbID: imdbID, selectedSeason: season });
     const selectedSeason = this.episodesCacheService.getSelectedSeason(imdbID);
+    this.episodesCacheService.saveToCache({ imdbID: imdbID, selectedSeason: selectedSeason || season });
     const totalSeasons = this.episodesCacheService.getTotalSeasons(imdbID) ?? this.episodesCacheService.getTotalSeasonsObservable(imdbID);
     this.seasons.next({ imdbID: imdbID, selectedSeason: selectedSeason || season, totalSeasons: totalSeasons });
   }
@@ -75,14 +75,17 @@ export class EpisodesService {
   episodesFromEpisode(imdbID: string, season: number) {
     console.log(`episodesFromEpisode`);
 
-    this.episodesCacheService.saveToCache({ imdbID: imdbID, selectedSeason: season });
-    this.episodes.next({ imdbID: imdbID, selectedSeason: season });
+    const selectedSeason = this.episodesCacheService.getSelectedSeason(imdbID);
+    console.log(`episodesFromEpisode selectedSeason: ${selectedSeason}`);
+    this.episodesCacheService.saveToCache({ imdbID: imdbID, selectedSeason: selectedSeason || season });
+    this.episodes.next({ imdbID: imdbID, selectedSeason: selectedSeason || season });
   }
 
   changeSeason(imdbID: string, season: number) {
     console.log(`changeSeason imdbID: ${imdbID}, season:${season}`);
 
-    this.episodesFromEpisode(imdbID, season);
+    this.episodesCacheService.saveToCache({ imdbID: imdbID, selectedSeason: season });
+    this.episodes.next({ imdbID: imdbID, selectedSeason: season });
   }
 
   private getSeasonNumArray(totalSeasons: number) {

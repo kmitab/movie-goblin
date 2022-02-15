@@ -19,19 +19,19 @@ export class EpisodesCacheService {
       : { imdbID: string; selectedSeason?: number; totalSeasons?: number; seasonResult?: SeasonResult; }
   ) {
     if (totalSeasons) {
-      console.log(`cacheTotalSeasons.set: ${imdbID}), ${totalSeasons}`);
+      console.log(`cacheTotalSeasons.set: ${imdbID}, ${totalSeasons}`);
       this.cacheTotalSeasons.set(imdbID, totalSeasons);
     }
 
     if (selectedSeason) {
-      console.log(`cacheSelectedSeason.set: ${imdbID}), ${selectedSeason}`);
+      console.log(`cacheSelectedSeason.set: ${imdbID}, ${selectedSeason}`);
       this.cacheSelectedSeason.set(imdbID, selectedSeason);
     }
 
     if (seasonResult) {
-      console.log(`cacheTotalSeasons.set: ${imdbID}), ${seasonResult.totalSeasons}`);
+      console.log(`cacheTotalSeasons.set: ${imdbID}, ${seasonResult.totalSeasons}`);
       this.cacheTotalSeasons.set(imdbID, seasonResult.totalSeasons);
-      console.log(`cacheSeasonResult.set: ${JSON.stringify({ imdbID: imdbID, seasonNum: seasonResult.Season })}), ${JSON.stringify(seasonResult)}`);
+      console.log(`cacheSeasonResult.set: ${JSON.stringify({ imdbID: imdbID, seasonNum: seasonResult.Season })}, ${JSON.stringify(seasonResult)}`);
       this.cacheSeasonResult.set(
         JSON.stringify({ imdbID: imdbID, seasonNum: seasonResult.Season }),
         seasonResult

@@ -45,7 +45,7 @@ export class EpisodesComponent implements OnInit {
     if (!this.initData || season < 1) {
       return;
     }
-    console.log(`onClickSeason ${season}`);
+    console.log(`onClickSeason: ${season}`);
 
     if (this.initData.Type == "series") {
       this.episodesService.changeSeason(
