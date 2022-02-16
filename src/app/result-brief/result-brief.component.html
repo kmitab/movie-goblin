@@ -1,4 +1,4 @@
-<div *ngIf="this.searchService.combinedResults$ | async as results" class="container-fluid">
+<div *ngIf="this.searchService.combinedResults$ | async as results" class="container-fluid px-0">
 
     <ng-container *ngIf="results[0] as film">
 
@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div *ngIf="films.totalPages as totalPages; else checkResponses" class="container pt-3">
+        <div *ngIf="films.totalPages as totalPages; else checkResponses" class="container pt-3 px-0">
             <ng-container *ngIf="totalPages > 1">
                 <ng-container *ngIf="this.searchService.navigation$ | async as navigation">
                     <div class="row align-items-center g-0">
