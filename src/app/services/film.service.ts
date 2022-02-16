@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of, tap } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
+import { apiUrl } from '../api';
 import { SingularResponse } from '../singular.reponse';
 import { SingularResult } from '../singular.result';
 import { PluralResponse } from '../plural.response';
@@ -15,7 +16,7 @@ import { SeasonResult } from '../season.result';
 })
 export class FilmService {
 
-  private apiUrl = "http://127.0.0.1:8000";
+  private apiUrl = apiUrl;
   private sharedOptions = { responseType: 'json' as const };
 
   constructor(private http: HttpClient) { }
