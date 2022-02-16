@@ -1,69 +1,106 @@
 import { SingularResponse } from "./singular.reponse";
 
-export class SingularResult implements SingularResponse {
+export class SingularResult {
 
-    private loading: string = "...";
-    Actors = this.loading;
-    Awards = this.loading;
-    BoxOffice = this.loading;
-    Country = this.loading;
-    DVD = this.loading;
-    Director = this.loading;
-    Genre = this.loading;
-    Language = this.loading;
-    Metascore = this.loading;
-    Plot = this.loading;
-    Poster = this.loading;
-    Production = this.loading;
-    Rated = this.loading;
-    Ratings = [{ Source: this.loading, Value: this.loading }];
-    Released = this.loading;
-    Response = this.loading;
-    Runtime = this.loading;
-    Title = this.loading;
-    Type = this.loading;
-    Website = this.loading;
-    Writer = this.loading;
-    Year = this.loading;
-    imdbID = this.loading;
-    imdbRating = this.loading;
-    imdbVotes = this.loading;
-    totalSeasons = this.loading;
-    seriesID = this.loading;
-    Season = this.loading;
+    imdbID?: string;
+    seriesID?: string;
+    Actors?: string;
+    Awards?: string;
+    BoxOffice?: string;
+    Country?: string;
+    DVD?: string;
+    Director?: string;
+    Genre?: string;
+    Language?: string;
+    Plot?: string;
+    Poster?: string;
+    Production?: string;
+    Rated?: string;
+    Released?: string;
+    Runtime?: string;
+    Title?: string;
+    Type?: string;
+    Website?: string;
+    Writer?: string;
+    Metascore?: number;
+    Season?: number;
+    totalSeasons?: number;
+    Year?: number;
+    imdbRating?: number;
+    imdbVotes?: number;
+    Response?: boolean;
+    Ratings?: { Source: string, Value: string; }[];
 
     constructor(singularResponse?: SingularResponse) {
         if (singularResponse) this.updateValues(singularResponse);
     }
 
-    private updateValues(values: SingularResponse): void {
+    private updateValues(response: SingularResponse) {
+
+        // string
+        this.imdbID = response.imdbID;
+        this.seriesID = this.valSeriesID(response.seriesID);
+        this.Actors = response.Actors;
+        this.Awards = response.Awards;
+        this.BoxOffice = response.BoxOffice;
+        this.Country = response.Country;
+        this.DVD = response.DVD;
+        this.Director = response.Director;
+        this.Genre = response.Genre;
+        this.Language = response.Language;
+        this.Plot = response.Plot;
+        this.Poster = response.Poster;
+        this.Production = response.Production;
+        this.Rated = response.Rated;
+        this.Released = response.Released;
+        this.Runtime = response.Runtime;
+        this.Title = response.Title;
+        this.Type = response.Type;
+        this.Website = response.Website;
+        this.Writer = response.Writer;
+
+        // number
+        this.Metascore = Number(response.Metascore) || undefined;
+        this.Season = Number(response.Season) || undefined;
+        this.totalSeasons = Number(response.totalSeasons) || undefined;
+        this.Year = Number(response.Year) || undefined;
+        this.imdbRating = Number(response.imdbRating) || undefined;
+        this.imdbVotes = this.valVotes(response.imdbVotes);
+
+        // boolean
+        this.Response = this.valResponse(response.imdbID);
+
+        // arrays
+        this.Ratings = response.Ratings;
+
         Object.keys(this)
+            .filter(key => (this[key as keyof SingularResult] == "N/A"))
             .forEach(key => {
-                let newValue = values[key as keyof SingularResponse]; // incoming value
-                if (typeof newValue == "string") {
-                    this[key as keyof SingularResult] = (newValue == "N/A" ? "" : newValue) as any;
-                    // newValue || "?" as any;
-
-                    // api issue where it sometimes returns seriesID starting with a single t
-                    if (key == "seriesID" && newValue != "" && !newValue.startsWith("tt")) {
-                        this[key as keyof SingularResult] = `t${newValue}` as any;
-                    }
-
-                } else if (newValue instanceof Array) {
-                    this[key as keyof SingularResult] = newValue as any;
-                }
+                this[key as keyof SingularResult] = undefined;
             });
     }
 
-    public getRatings(): string {
-        if (this.Ratings.length == 0) return "no ratings";
-        let result = "";
-        for (let i = 0; i < this.Ratings.length; i++) {
-            result = result.concat(`${this.Ratings[i].Source}: ${this.Ratings[i].Value}`);
-            if (i < this.Ratings.length - 1) {
-                result = result.concat(", ");
-            }
+    private valSeriesID(seriesID: string | undefined) {
+        if (!seriesID) {
+            return seriesID;
         }
-        return result;
+        if (!seriesID.startsWith("tt")) {
+            return `t${seriesID}`;
+        }
+        return seriesID;
+    }
+
+    private valResponse(response: string | undefined) {
+        if (!response || response == "False") {
+            return false;
+        }
+        return true;
+    }
+
+    private valVotes(votes: string | undefined) {
+        if (!votes) {
+            return undefined;
+        }
+        return Number(votes.split(",").join(""));
     }
 }

@@ -1,5 +1,5 @@
 <div *ngIf="selectedFilm$ | async as film" class="container-fluid">
-    <ng-container *ngIf="film.Response=='True'; else elseBlock">
+    <ng-container *ngIf="film.Response; else elseBlock">
 
         <div class="row">
             <div class="col">
@@ -31,7 +31,7 @@
                     </ng-container>
                 </dl>
 
-                <ng-container *ngIf="film.Type =='episode' || film.Type == 'series'">
+                <ng-container *ngIf="(film.Type =='episode') || (film.totalSeasons && film.Type == 'series')">
                     <app-episodes [initData]="{
                         imdbID: film.imdbID,
                         Type: film.Type,

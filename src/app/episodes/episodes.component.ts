@@ -9,80 +9,79 @@ import { EpisodesService } from '../services/episodes.service';
 export class EpisodesComponent implements OnInit {
 
   @Input()
-  initData?: {
-    imdbID: string,
-    Type: string,
-    seriesID: string,
-    totalSeasons: string;
-    Season: string;
-  };
+  set initData({ imdbID, Type, seriesID, totalSeasons, Season }
+      : {
+        imdbID?: string,
+        Type?: string,
+        seriesID?: string,
+        totalSeasons?: number,
+        Season?: number;
+      }) {
+    this.imdbID = imdbID ?? "";
+    this.Type = Type ?? "";
+    this.seriesID = seriesID ?? "";
+    this.totalSeasons = totalSeasons ?? 0;
+    this.Season = Season ?? 0;
+  }
+
+  private imdbID!: string;
+  private Type!: string;
+  private seriesID!: string;
+  private totalSeasons!: number;
+  private Season!: number;
 
   constructor(public episodesService: EpisodesService) { }
 
   ngOnInit() { }
 
   onClickSeasons() {
-    if (!this.initData) {
-      return;
-    }
-
-    if (this.initData.Type == "series") {
+    if (this.Type == "series") {
       this.episodesService.seasonsFromSeries(
-        this.initData.imdbID,
-        Number(this.initData.totalSeasons) || 0
+        this.imdbID,
+        this.totalSeasons
       );
     }
 
-    if (this.initData.Type == "episode") {
+    if (this.Type == "episode") {
       this.episodesService.seasonsFromEpisode(
-        this.initData.seriesID,
-        Number(this.initData.Season) || 0
+        this.seriesID,
+        this.Season
       );
     }
   }
 
   onClickSeason(season: number) {
-    if (!this.initData || season < 1) {
+    if (season < 1) {
       return;
     }
     console.log(`onClickSeason: ${season}`);
 
-    if (this.initData.Type == "series") {
+    if (this.Type == "series") {
       this.episodesService.changeSeason(
-        this.initData.imdbID,
+        this.imdbID,
         season
       );
-    } else if (this.initData.Type == "episode") {
+    } else if (this.Type == "episode") {
       this.episodesService.changeSeason(
-        this.initData.seriesID,
+        this.seriesID,
         season
       );
     } else {
-      console.log("wtf?");
+      console.log("how?");
     }
   }
 
   onClickEpisodes() {
-    if (!this.initData) {
-      return;
-    }
-    if (this.initData.Type == "series") {
+    if (this.Type == "series") {
       this.episodesService.episodesFromSeries(
-        this.initData.imdbID,
-        Number(this.initData.totalSeasons) || 0
+        this.imdbID,
+        this.totalSeasons
       );
-    } else if (this.initData.Type == "episode") {
+    } else if (this.Type == "episode") {
       this.episodesService.episodesFromEpisode(
-        this.initData.seriesID,
-        Number(this.initData.Season) || 0
+        this.seriesID,
+        this.Season
       );
-      //this.episodesService.panicSeason(this.getSeriesID());
-      // this.episodesService.changeSeason(
-      //   this.initData.seriesID,
-      //   Number(this.initData.Season) || 1
-      // );
     }
-
-
   }
 }

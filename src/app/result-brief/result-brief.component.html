@@ -4,10 +4,10 @@
 
         <div class="row">
             <div class="column">
-                <div *ngIf="film.Response == 'True'" class="list-group">
+                <div *ngIf="film.Response" class="list-group">
                     <a routerLink="/i/{{film.imdbID}}" routerLinkActive="active"
                         class="list-group-item list-group-item-action">
-                        <h5>{{film.Title}}, {{film.Year}} ({{film.Type}})</h5>
+                        <h5>{{film.Title}}, {{film.Year || ""}} ({{film.Type}})</h5>
                         <p>{{film.Genre}}</p>
                         <ng-container *ngIf="film.Plot">
                             <p>{{film.Plot}}</p>
@@ -59,7 +59,7 @@
         </div>
 
         <ng-template #checkResponses>
-            <div *ngIf="results[0].Response == 'False' && films.Response == 'False'">
+            <div *ngIf="!results[0].Response && !films.Response">
                 <i>Nothing found.</i>
             </div>
         </ng-template>
