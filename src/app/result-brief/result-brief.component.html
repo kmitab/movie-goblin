@@ -1,7 +1,7 @@
-<div *ngIf="this.searchService.combinedResults$ | async as results" class="container-fluid px-0">
+<div *ngIf="this.searchService.combinedResults$ | async as results" class="container-fluid px-0 d-none d-md-block">
 
     <ng-container *ngIf="results[0] as film">
-        <div class="row d-none d-md-block">
+        <div class="row">
             <div class="column">
                 <div *ngIf="film.Response" class="list-group">
                     <a routerLink="/i/{{film.imdbID}}" routerLinkActive="active"
@@ -19,7 +19,7 @@
 
     <ng-container *ngIf="results[1] as films">
 
-        <div class="row d-none d-md-block">
+        <div class="row">
             <div class="column">
                 <ul class="list-group">
                     <div *ngFor="let film of films.Search">
@@ -40,7 +40,7 @@
         <div *ngIf="films.totalPages as totalPages; else checkResponses" class="container px-0">
             <ng-container *ngIf="(totalPages > 1) && (this.searchService.navigation$ | async) as navigation">
 
-                <div class="row align-items-center pt-3 g-0 d-none d-md-block">
+                <div class="row align-items-center pt-3 g-0">
                     <div class="col text-center">
                         <button type="button" [disabled]="navigation.page <= 1" (click)="this.searchService.prevPage()"
                             class="btn btn-default">Back</button>
@@ -54,34 +54,11 @@
                     </div>
                 </div>
 
-                <!-- horizontal content for small screens -->
-                <div class="row d-block d-md-none overflow-auto py-3">
-                    <ul class="list-group list-group-horizontal">
-                        <a routerLink="/i/{{results[0].imdbID}}" routerLinkActive="active"
-                            class="list-group-item list-group-item-action">
-                            <ul class="list-unstyled text-truncate">
-                                <li>{{results[0].Title}}</li>
-                                <li>{{results[0].Type | titlecase}}, {{results[0].Year}}</li>
-                            </ul>
-                        </a>
-                        <div *ngFor="let film of films.Search">
-                            <ng-container *ngIf="film.imdbID != results[0].imdbID">
-                                <a routerLink="/i/{{film.imdbID}}" routerLinkActive="active"
-                                    class="list-group-item list-group-item-action">
-                                    <ul class="list-unstyled text-truncate">
-                                        <li>{{film.Title}}</li>
-                                        <li>{{film.Type | titlecase}}, {{film.Year}}</li>
-                                    </ul>
-                                </a>
-                            </ng-container>
-                        </div>
-                    </ul>
-                </div>
             </ng-container>
         </div>
 
         <ng-template #checkResponses>
-            <div *ngIf="!results[0].Response && !films.Response">
+            <div *ngIf="results[0].Response == false && films.Response == false">
                 <i>Nothing found.</i>
             </div>
         </ng-template>

@@ -9,6 +9,7 @@ import { SearchComponent } from './search/search.component';
 import { ResultBriefComponent } from './result-brief/result-brief.component';
 import { ResultFullComponent } from './result-full/result-full.component';
 import { EpisodesComponent } from './episodes/episodes.component';
+import { ResultBriefHorizontalComponent } from './result-brief-horizontal/result-brief-horizontal.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { EpisodesComponent } from './episodes/episodes.component';
     SearchComponent,
     ResultBriefComponent,
     ResultFullComponent,
-    EpisodesComponent
+    EpisodesComponent,
+    ResultBriefHorizontalComponent
   ],
   imports: [
     BrowserModule,

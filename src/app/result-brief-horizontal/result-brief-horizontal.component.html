@@ -1,0 +1,45 @@
+<!-- horizontal content for small screens -->
+
+<div *ngIf="this.searchService.combinedResults$ | async as results" class="container-fluid px-0 py-2 d-block d-md-none">
+
+    <div id="horizontal-scroller" *ngIf="results[0].Response || results[1].Response" class="row overflow-auto">
+        <ng-container *ngIf="(results[1].totalPages > 1) && (this.searchService.navigation$ | async) as navigation">
+            <ul class="list-group list-group-horizontal">
+
+                <div *ngIf="navigation.page > 1">
+                    <!-- onclick="document.getElementById('horizontal-scroller').scrollLeft = document.getElementById('horizontal-scroller').scrollWidth" -->
+                    <a (click)="this.searchService.prevPage()" class="list-group-item list-group-item-action">
+                        <ul class="list-unstyled text-truncate">
+                            <li><b>Go</b></li>
+                            <li><b>Back</b></li>
+                        </ul>
+                    </a>
+                </div>
+
+                <div *ngFor="let film of results[1].Search">
+                    <ng-container *ngIf="film.imdbID != results[0].imdbID">
+                        <a routerLink="/i/{{film.imdbID}}" routerLinkActive="active"
+                            class="list-group-item list-group-item-action">
+                            <ul class="list-unstyled text-truncate">
+                                <li>{{film.Title}}</li>
+                                <li>{{film.Type | titlecase}}, {{film.Year}}</li>
+                            </ul>
+                        </a>
+                    </ng-container>
+                </div>
+
+                <div *ngIf="navigation.page < results[1].totalPages">
+                    <a onclick="document.getElementById('horizontal-scroller').scrollLeft = 0"
+                        (click)="this.searchService.nextPage()" class="list-group-item list-group-item-action">
+                        <ul class="list-unstyled text-truncate">
+                            <li><b>More</b></li>
+                            <li><i>{{results[1].totalPages - navigation.page}} page(s) left</i></li>
+                        </ul>
+                    </a>
+                </div>
+
+            </ul>
+        </ng-container>
+    </div>
+
+</div>

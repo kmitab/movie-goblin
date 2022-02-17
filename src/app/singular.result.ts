@@ -68,7 +68,7 @@ export class SingularResult {
         this.imdbVotes = this.valVotes(response.imdbVotes);
 
         // boolean
-        this.Response = this.valResponse(response.imdbID);
+        this.Response = this.valResponse(response.Response);
 
         // arrays
         this.Ratings = response.Ratings;

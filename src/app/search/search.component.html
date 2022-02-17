@@ -3,7 +3,7 @@
         <div class="col-sm pt-3">
             <input #searchBox (input)="search(searchBox.value)" class="form-control" placeholder="Search..." />
         </div>
-        <div class="col-auto pt-3">
+        <div class="col-auto pt-3" style="background-color: rgba(0,0,0,0)">
             <ng-container *ngIf="this.searchService.navigation$ | async as navigation">
                 <div class="btn-group" role="group" aria-label="Search">
                     <ng-container *ngFor="let t of resultType | keyvalue">
