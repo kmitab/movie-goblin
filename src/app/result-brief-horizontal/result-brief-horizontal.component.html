@@ -3,7 +3,7 @@
 <div *ngIf="this.searchService.combinedResults$ | async as results" class="container-fluid px-0 py-2 d-block d-md-none">
 
     <div id="horizontal-scroller" *ngIf="results[0].Response || results[1].Response" class="row overflow-auto">
-        <ng-container *ngIf="(results[1].totalPages > 1) && (this.searchService.navigation$ | async) as navigation">
+        <ng-container *ngIf="this.searchService.navigation$ | async as navigation">
             <ul class="list-group list-group-horizontal">
 
                 <div *ngIf="navigation.page > 1">
@@ -12,6 +12,16 @@
                         <ul class="list-unstyled text-truncate">
                             <li><b>Go</b></li>
                             <li><b>Back</b></li>
+                        </ul>
+                    </a>
+                </div>
+
+                <div *ngIf="results[0].Response">
+                    <a routerLink="/i/{{results[0].imdbID}}" routerLinkActive="active"
+                        class="list-group-item list-group-item-action">
+                        <ul class="list-unstyled text-truncate">
+                            <li>{{results[0].Title}}</li>
+                            <li>{{results[0].Type | titlecase}}, {{results[0].Year}}</li>
                         </ul>
                     </a>
                 </div>
