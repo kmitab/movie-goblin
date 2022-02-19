@@ -1,8 +1,8 @@
-<div *ngIf="selectedFilm$ | async as film" class="container-fluid px-0">
+<div *ngIf="selectedFilm$ | async as film" class="container-fluid px-sm-0">
     <ng-container *ngIf="film.Response; else elseBlock">
 
         <div class="row">
-            <div class="col">
+            <div class="col-lg">
                 <h1>{{film.Title}}</h1>
                 <h3>{{film.Type | titlecase}}, {{film.Year}}</h3>
                 <h5>{{film.Genre}}</h5>

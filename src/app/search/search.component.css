@@ -1,3 +1,7 @@
+.trans-div {
+    background-color: transparent;
+}
+
 div {
     background-color: rgb(240, 240, 240);
 }

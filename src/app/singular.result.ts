@@ -22,10 +22,10 @@ export class SingularResult {
     Type?: string;
     Website?: string;
     Writer?: string;
+    Year?: string;
     Metascore?: number;
     Season?: number;
     totalSeasons?: number;
-    Year?: number;
     imdbRating?: number;
     imdbVotes?: number;
     Response?: boolean;
@@ -58,12 +58,12 @@ export class SingularResult {
         this.Type = response.Type;
         this.Website = response.Website;
         this.Writer = response.Writer;
+        this.Year = response.Year;
 
         // number
         this.Metascore = Number(response.Metascore) || undefined;
         this.Season = Number(response.Season) || undefined;
         this.totalSeasons = Number(response.totalSeasons) || undefined;
-        this.Year = Number(response.Year) || undefined;
         this.imdbRating = Number(response.imdbRating) || undefined;
         this.imdbVotes = this.valVotes(response.imdbVotes);
 

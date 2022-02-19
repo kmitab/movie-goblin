@@ -21,18 +21,15 @@
 
         <div class="row">
             <div class="column">
-                <ul class="list-group">
-                    <div *ngFor="let film of films.Search">
+                <ul class="list-group list-group-flush">
+                    <ng-container *ngFor="let film of films.Search">
                         <ng-container *ngIf="film.imdbID != results[0].imdbID">
-                            <a routerLink="/i/{{film.imdbID}}" routerLinkActive="active"
-                                class="list-group-item list-group-item-action">
-                                <ul class="list-unstyled">
-                                    <li class="text-truncate">{{film.Title}}</li>
-                                    <li>{{film.Type | titlecase}}, {{film.Year}}</li>
-                                </ul>
+                            <a routerLink="/i/{{film.imdbID}}" routerLinkActive="active" class="list-group-item">
+                                <h6 class="text-truncate">{{film.Title}}</h6>
+                                <p class="mb-0">{{film.Type | titlecase}}, {{film.Year}}</p>
                             </a>
                         </ng-container>
-                    </div>
+                    </ng-container>
                 </ul>
             </div>
         </div>
@@ -40,17 +37,17 @@
         <div *ngIf="films.totalPages as totalPages; else checkResponses" class="container px-0">
             <ng-container *ngIf="(totalPages > 1) && (this.searchService.navigation$ | async) as navigation">
 
-                <div class="row align-items-center pt-3 g-0">
+                <div class="row align-items-center pt-3 g-0 border-bottom-2">
                     <div class="col text-center">
                         <button type="button" [disabled]="navigation.page <= 1" (click)="this.searchService.prevPage()"
-                            class="btn btn-default">Back</button>
+                            class="btn btn-outline-secondary">Back</button>
                     </div>
                     <div class="col text-center">
                         <b>{{navigation.page}}</b> / {{totalPages}}
                     </div>
                     <div class="col text-center">
                         <button type="button" [disabled]="navigation.page >= totalPages"
-                            (click)="this.searchService.nextPage()" class="btn btn-default">More</button>
+                            (click)="this.searchService.nextPage()" class="btn btn-outline-secondary">More</button>
                     </div>
                 </div>
 

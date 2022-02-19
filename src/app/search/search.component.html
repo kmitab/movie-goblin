@@ -1,19 +1,49 @@
-<div class="container-fluid fixed-top border-bottom">
+<div class="container-fluid fixed-top border-bottom border-2">
     <div class="row pb-3">
         <div class="col-sm pt-3">
             <input #searchBox (input)="search(searchBox.value)" class="form-control" placeholder="Search..." />
         </div>
-        <div class="col-auto pt-3" style="background-color: rgba(0,0,0,0)">
+        <div class="trans-div col-auto pt-3">
             <ng-container *ngIf="this.searchService.navigation$ | async as navigation">
-                <div class="btn-group" role="group" aria-label="Search">
+                <div class="btn-group" role="group" aria-label="Search categories">
                     <ng-container *ngFor="let t of resultType | keyvalue">
                         <input type="radio" name={{t.key}} id={{t.key}} autocomplete="off"
                             [checked]="t.value == navigation.type" class="btn-check">
-                        <label (click)="search(searchBox.value, t.value)"
-                            class="btn btn-outline-primary">{{t.key}}</label>
+                        <label (click)="search(searchBox.value, t.value)" class="btn btn-outline-dark">{{t.key}}</label>
                     </ng-container>
                 </div>
             </ng-container>
+            <div class="btn-group ps-4" data-bs-toggle="modal" data-bs-target="#exampleModal" role="group"
+                aria-label="Help">
+                <input type="radio" autocomplete="off" class="btn-check">
+                <label class="btn btn-outline-dark">?</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">What is this about?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>I started this project to help me learn the following:</p>
+                <ul>
+                    <li>Angular</li>
+                    <li>TypeScript</li>
+                    <li>RxJS</li>
+                    <li>Bootstrap</li>
+                </ul>
+                <p>The data source is the excellent <a href="https://www.omdbapi.com/">omdb api</a>.
+                </p>
+                <div class="modal-footer">
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
