@@ -1,4 +1,4 @@
-<div class="container-fluid fixed-top border-bottom border-2">
+<div class="search-bg container-fluid fixed-top border-bottom border-2">
     <div class="row pb-3">
         <div class="col-sm pt-3">
             <input #searchBox (input)="search(searchBox.value)" class="form-control" placeholder="Search..." />
@@ -13,7 +13,7 @@
                     </ng-container>
                 </div>
             </ng-container>
-            <div class="btn-group ps-4" data-bs-toggle="modal" data-bs-target="#exampleModal" role="group"
+            <div class="btn-group ps-4" data-bs-toggle="modal" data-bs-target="#helpModal" role="group"
                 aria-label="Help">
                 <input type="radio" autocomplete="off" class="btn-check">
                 <label class="btn btn-outline-dark">?</label>
@@ -23,11 +23,11 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">What is this about?</h5>
+                <h5 class="modal-title" id="helpModalLabel">What is this about?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
