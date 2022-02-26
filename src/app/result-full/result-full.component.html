@@ -9,7 +9,7 @@
     <ng-container *ngIf="film.Response; else elseBlock">
 
         <div class="row">
-            <div class="col-lg">
+            <div class="col-xl">
                 <h1>{{film.Title}}</h1>
                 <h3>{{film.Type | titlecase}}, {{film.Year}}</h3>
                 <h5>{{film.Genre}}</h5>
@@ -21,7 +21,7 @@
                     </ng-container>
                     <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Starring', item: film.Actors }">
                     </ng-container>
-                    <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Language', item: film.Language }">
+                    <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Country', item: film.Country }">
                     </ng-container>
                     <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Runtime', item: film.Runtime }">
                     </ng-container>
@@ -56,6 +56,33 @@
             <div class="col">
                 <h3>Plot Summary</h3>
                 <p class="text-justify">{{film.Plot}}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl">
+                <dl class="row">
+                    <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Released', item: film.Released }">
+                    </ng-container>
+                    <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Language', item: film.Language }">
+                    </ng-container>
+                    <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Rated', item: film.Rated }">
+                    </ng-container>
+                    <ng-container *ngTemplateOutlet="listItem; context: { desc: 'DVD', item: film.DVD }">
+                    </ng-container>
+                </dl>
+            </div>
+            <div class="col">
+                <dl class="row">
+                    <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Awards', item: film.Awards }">
+                    </ng-container>
+                    <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Box office', item: film.BoxOffice }">
+                    </ng-container>
+                    <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Production', item: film.Production }">
+                    </ng-container>
+                    <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Website', item: film.Website }">
+                    </ng-container>
+                </dl>
             </div>
         </div>
 
