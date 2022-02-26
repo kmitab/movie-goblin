@@ -57,7 +57,8 @@ app.add_middleware(
 async def read_item(t: str, plot: Optional[str] = "short", type: Optional[str] = ""):
     async with httpx.AsyncClient() as client:
         r = await client.get(f"{base_url}&t={t}&plot={plot}&type={type}")
-        print(r.url)
+        if config["verbose"]:
+            print(r.url)
         return r.json()
 
 
@@ -73,7 +74,8 @@ async def read_item(
         if season:
             request_string = "".join((request_string, f"&Season={season}"))
         r = await client.get(request_string)
-        print(r.url)
+        if config["verbose"]:
+            print(r.url)
         return r.json()
 
 
@@ -81,5 +83,6 @@ async def read_item(
 async def read_item(s: str, page: Optional[int] = 1, type: Optional[str] = ""):
     async with httpx.AsyncClient() as client:
         r = await client.get(f"{base_url}&s={s}&page={page}&type={type}")
-        print(r.url)
+        if config["verbose"]:
+            print(r.url)
         return r.json()

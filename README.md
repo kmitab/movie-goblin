@@ -24,6 +24,7 @@ Naturally, you need to obtain your own omdb api key if you want to play around w
 - `/_backend/config.json`- for api credentials and allowed origins:
 ```
 {
+    "verbose": false,
     "key": "xxxyyy123",
     "url": "http://www.omdbapi.com",
     "origins": [
