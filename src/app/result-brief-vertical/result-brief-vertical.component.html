@@ -41,15 +41,21 @@
 
                 <div class="row align-items-center pt-3 g-0 border-bottom-2">
                     <div class="col text-center">
-                        <button type="button" [disabled]="navigation.page <= 1" (click)="this.searchService.prevPage()"
-                            class="btn btn-outline-secondary">Back</button>
+                        <ng-container *ngIf="navigation.page > 1">
+                            <a (click)="this.searchService.prevPage()" class="btn btn-round">
+                                <h1>&#8249;</h1>
+                            </a>
+                        </ng-container>
                     </div>
                     <div class="col text-center">
                         <b>{{navigation.page}}</b> / {{totalPages}}
                     </div>
                     <div class="col text-center">
-                        <button type="button" [disabled]="navigation.page >= totalPages"
-                            (click)="this.searchService.nextPage()" class="btn btn-outline-secondary">More</button>
+                        <ng-container *ngIf="navigation.page < totalPages">
+                            <a (click)="this.searchService.nextPage()" class="btn btn-round">
+                                <h1>&#8250;</h1>
+                            </a>
+                        </ng-container>
                     </div>
                 </div>
 
