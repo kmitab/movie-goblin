@@ -72,8 +72,8 @@
         </ng-template>
 
         <div class="row">
-            <div class="col-xl">
-                <dl class="row">
+            <div class="col-xl mb-0 pb-0">
+                <dl class="row mb-0 pb-0">
                     <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Released', item: film.Released }">
                     </ng-container>
                     <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Language', item: film.Language }">
@@ -84,8 +84,8 @@
                     </ng-container>
                 </dl>
             </div>
-            <div class="col">
-                <dl class="row">
+            <div class="col mb-0 pb-0">
+                <dl class="row mb-0 pb-0">
                     <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Awards', item: film.Awards }">
                     </ng-container>
                     <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Box office', item: film.BoxOffice }">
