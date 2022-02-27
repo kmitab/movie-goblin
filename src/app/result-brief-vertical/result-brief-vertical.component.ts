@@ -5,11 +5,11 @@ import { PluralResult } from '../plural.result';
 import { SearchService } from '../services/search.service';
 
 @Component({
-  selector: 'app-result-brief-horizontal',
-  templateUrl: './result-brief-horizontal.component.html',
-  styleUrls: ['./result-brief-horizontal.component.css']
+  selector: 'app-result-brief-vertical',
+  templateUrl: './result-brief-vertical.component.html',
+  styleUrls: ['./result-brief-vertical.component.css']
 })
-export class ResultBriefHorizontalComponent {
+export class ResultBriefVerticalComponent {
 
   @Input() results?: [SingularResult, PluralResult];
 

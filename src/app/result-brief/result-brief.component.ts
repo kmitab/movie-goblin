@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { SearchService } from '../services/search.service';
 
@@ -7,12 +7,6 @@ import { SearchService } from '../services/search.service';
   templateUrl: './result-brief.component.html',
   styleUrls: ['./result-brief.component.css']
 })
-export class ResultBriefComponent implements OnInit {
-
+export class ResultBriefComponent {
   constructor(public searchService: SearchService) { }
-
-  ngOnInit(): void {
-    console.log("ResultBriefComponent ngOnInit");
-  }
-
 }

@@ -10,6 +10,7 @@ import { ResultBriefComponent } from './result-brief/result-brief.component';
 import { ResultFullComponent } from './result-full/result-full.component';
 import { EpisodesComponent } from './episodes/episodes.component';
 import { ResultBriefHorizontalComponent } from './result-brief-horizontal/result-brief-horizontal.component';
+import { ResultBriefVerticalComponent } from './result-brief-vertical/result-brief-vertical.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ResultBriefHorizontalComponent } from './result-brief-horizontal/result
     ResultBriefComponent,
     ResultFullComponent,
     EpisodesComponent,
-    ResultBriefHorizontalComponent
+    ResultBriefHorizontalComponent,
+    ResultBriefVerticalComponent
   ],
   imports: [
     BrowserModule,

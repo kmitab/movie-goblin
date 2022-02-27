@@ -1,6 +1,6 @@
 <!-- horizontal content for small screens -->
 
-<div *ngIf="this.searchService.combinedResults$ | async as results" class="container-fluid px-0 pb-4 d-block d-md-none">
+<div *ngIf="this.results as results" class="container-fluid px-0 pb-4 d-block d-md-none">
 
     <div id="horizontal-scroller" *ngIf="results[0].Response || results[1].Response" class="row overflow-auto">
         <ng-container *ngIf="this.searchService.navigation$ | async as navigation">
