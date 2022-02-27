@@ -6,7 +6,7 @@
 </ng-template>
 
 <div *ngIf="selectedFilm$ | async as film" class="container-fluid px-sm-0">
-    <ng-container *ngIf="film.Response; else elseBlock">
+    <ng-container *ngIf="film.Response; else pageNotFound">
 
         <div class="row">
             <div class="col-xl">
@@ -14,7 +14,7 @@
                 <h3>{{film.Type | titlecase}}, {{film.Year}}</h3>
                 <h5>{{film.Genre}}</h5>
 
-                <dl class="row py-3">
+                <dl class="row py-3 mb-0">
                     <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Directed by', item: film.Director }">
                     </ng-container>
                     <ng-container *ngTemplateOutlet="listItem; context: { desc: 'Writen by', item: film.Writer }">
@@ -27,16 +27,18 @@
                     </ng-container>
                 </dl>
 
-                <ng-container *ngIf="(film.Type =='episode') || (film.totalSeasons && film.Type == 'series')">
-                    <app-episodes [initData]="{
+                <div class="row ps-2 mb-4">
+                    <ng-container *ngIf="(film.Type =='episode') || (film.totalSeasons && film.Type == 'series')">
+                        <app-episodes [initData]="{
                         imdbID: film.imdbID,
                         Type: film.Type,
                         seriesID: film.seriesID,
                         totalSeasons: film.totalSeasons,
                         Season: film.Season
                     }">
-                    </app-episodes>
-                </ng-container>
+                        </app-episodes>
+                    </ng-container>
+                </div>
 
             </div>
             <div *ngIf="film.Poster" class="col">
@@ -52,12 +54,22 @@
             </div>
         </div>
 
-        <div *ngIf="film.Plot" class="row py-5">
-            <div class="col">
-                <h3>Plot Summary</h3>
-                <p class="text-justify">{{film.Plot}}</p>
+        <ng-container *ngIf="film.Plot else noPlot">
+            <div class="row py-5">
+                <div class="col">
+                    <h3>Plot Summary</h3>
+                    <p class="text-justify">{{film.Plot}}</p>
+                </div>
             </div>
-        </div>
+        </ng-container>
+
+        <ng-template #noPlot>
+            <div class="row py-5">
+                <div class="col">
+                    <p class="text-justify"><i>No plot details available.</i></p>
+                </div>
+            </div>
+        </ng-template>
 
         <div class="row">
             <div class="col-xl">
@@ -87,7 +99,7 @@
         </div>
 
     </ng-container>
-    <ng-template #elseBlock>
+    <ng-template #pageNotFound>
         <h1 class="display-4">404</h1>
         <h1 class="display-4">page not found</h1>
     </ng-template>
