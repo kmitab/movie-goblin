@@ -49,6 +49,9 @@
                             <i>{{rating.Source}}: </i>
                             <b>{{rating.Value}}</b>
                         </div>
+                        <ng-container *ngIf="film.Ratings?.length == 0">
+                            <i>No ratings.</i>
+                        </ng-container>
                     </div>
                 </div>
             </div>
