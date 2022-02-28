@@ -7,7 +7,9 @@ I started this project to help me learn the following:
 - **RxJS**
 - Bootstrap
 
-The data source for this frontend is the excellent [omdb api](https://www.omdbapi.com/).
+The data source for this frontend is the excellent [omdb api](https://www.omdbapi.com/). 
+
+Please note that this project (omdb-g) is educational in nature and not business-oriented in any way.
 
 ## demo
 
