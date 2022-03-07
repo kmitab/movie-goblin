@@ -7,9 +7,10 @@ I started this project to help me learn the following:
 - **RxJS**
 - Bootstrap
 
-The data source for this frontend is the excellent [omdb api](https://www.omdbapi.com/). 
+The data source for this frontend is the excellent [omdb api](https://www.omdbapi.com/).
 
-Please note that this project (omdb-g) is educational in nature and not business-oriented in any way.
+- **Note**: I am not affiliated with omdb, imdb or any other such websites.
+- **Note**: this project (omdb-g) is educational in nature and not business-oriented in any way.
 
 ## demo
 
@@ -23,7 +24,7 @@ Naturally, you need to obtain your own omdb api key if you want to play around w
 
 ## config files
 
-- `/_backend/config.json`- for api credentials and allowed origins:
+- `/_backend/config.json` - for api credentials and allowed origins, example:
 ```
 {
     "verbose": false,
@@ -36,7 +37,7 @@ Naturally, you need to obtain your own omdb api key if you want to play around w
 }
 ```
 
-- `/src/api.ts` - for the backend url:
+- `/src/api.ts` - for the backend url, example:
 ```
 export const apiUrl = "http://192.168.1.5:8000";
 ```
