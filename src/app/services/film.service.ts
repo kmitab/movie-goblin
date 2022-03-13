@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of, tap } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { apiUrl } from '../api';
+import { environment } from 'src/environments/environment';
 import { SingularResponse } from '../singular.reponse';
 import { SingularResult } from '../singular.result';
 import { PluralResponse } from '../plural.response';
@@ -16,7 +16,7 @@ import { SeasonResult } from '../season.result';
 })
 export class FilmService {
 
-  private apiUrl = apiUrl;
+  private apiUrl = environment.apiUrl;
   private sharedOptions = { responseType: 'json' as const };
 
   constructor(private http: HttpClient) { }

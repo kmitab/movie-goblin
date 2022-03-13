@@ -47,8 +47,8 @@ Thumbs.db
 
 # project
 /*.txt
+/*.bat
 __pycache__
 venv
-api.ts
 /_backend/config.json
-/*.bat
+/src/environments/environment.prod.ts
