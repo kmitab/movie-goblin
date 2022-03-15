@@ -1,4 +1,4 @@
-## omdb-g
+## movie-goblin
 
 I started this project to help me learn the following:
 
@@ -10,7 +10,7 @@ I started this project to help me learn the following:
 The data source for this frontend is the excellent [omdb api](https://www.omdbapi.com/).
 
 - **Note**: I am not affiliated with omdb, imdb or any other such websites.
-- **Note**: this project (omdb-g) is educational in nature and not business-oriented in any way.
+- **Note**: this project (movie-goblin) is educational in nature and not business-oriented in any way.
 
 ## demo
 
