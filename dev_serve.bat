@@ -1,1 +1,1 @@
-ng serve --host 0.0.0.0 --disable-host-check --open
+ng serve --host 127.0.0.1 --open
