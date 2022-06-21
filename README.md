@@ -14,7 +14,7 @@ The data source for this frontend is the excellent [omdb api](https://www.omdbap
 
 ## demo
 
-[Live demo is available here.](http://35.208.169.254/)
+~~[Live demo is available here.](http://35.208.169.254/)~~
 
 ## backend
 
